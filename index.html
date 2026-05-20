@@ -10,6 +10,11 @@
     <meta name="keywords" content="SAP ABAP Lead, SAP Corporate Trainer, SAP BTP, S/4HANA, SAP AI Core, Generative AI Hub, RAP, CAPM, Mir Moheeb Ali, Hyderabad SAP Consultant, Enterprise Architecture">
     <meta name="author" content="Mir Moheeb Ali">
     
+    <!-- Open Graph / Social -->
+    <meta property="og:title" content="Mir Moheeb Ali | SAP Enterprise Architect">
+    <meta property="og:description" content="Architecting enterprise SAP solutions and upskilling global workforces. 15+ Years Experience.">
+    <meta property="og:type" content="website">
+    
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -52,7 +57,8 @@
         }
 
         /* === RESET & BASE === */
-        * { margin: 0; padding: 0; box-sizing: border-box; cursor: none !important; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        @media (pointer: fine) { * { cursor: none !important; } }
         html { scroll-behavior: smooth; }
         
         body {
@@ -62,49 +68,127 @@
             background-size: 40px 40px;
         }
 
-        /* Form elements ke liye cursor issue solved */
-        input, textarea, input:focus, textarea:focus { cursor: text !important; }
-
         ::-webkit-scrollbar { width: 8px; background: var(--bg-color); }
         ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
         ::-webkit-scrollbar-thumb:hover { background: var(--accent-main); }
 
-        /* === UPGRADED CUSTOM CURSOR === */
+        /* === UPGRADED CUSTOM CURSOR (Fixed Z-Index to MAX) === */
         .cursor-dot {
             width: 8px; height: 8px; background: var(--accent-main); border-radius: 50%;
-            position: fixed; top: 0; left: 0; pointer-events: none; z-index: 999999;
+            position: fixed; top: 0; left: 0; pointer-events: none; z-index: 2147483647;
             box-shadow: 0 0 15px var(--accent-main), 0 0 30px var(--accent-main); 
             transform: translate(-50%, -50%); transition: width 0.2s, height 0.2s;
         }
         .cursor-outline {
             width: 40px; height: 40px; border: 1.5px solid var(--accent-main); border-radius: 50%;
-            position: fixed; top: 0; left: 0; pointer-events: none; z-index: 999998;
+            position: fixed; top: 0; left: 0; pointer-events: none; z-index: 2147483646;
             transform: translate(-50%, -50%); transition: 0.1s ease-out;
             box-shadow: inset 0 0 15px rgba(255,255,255,0.05);
         }
         .hover-active .cursor-dot { width: 12px; height: 12px; background: #fff; box-shadow: 0 0 25px #fff; }
         .hover-active .cursor-outline { width: 65px; height: 65px; border-color: #fff; background: rgba(255,255,255,0.05); }
 
-        /* === 1. GATEKEEPER SCREEN (With 3D Parallax & Mobile Scroll Fix) === */
+        /* === 1. GATEKEEPER SCREEN === */
         #gatekeeper {
-            position: fixed; inset: 0; background: rgba(3,3,7,0.85); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(3,3,7,0.85); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
             z-index: 100000; display: flex; flex-direction: column; align-items: center; justify-content: center;
             transition: opacity 0.8s ease-in-out, transform 0.8s ease-in-out; perspective: 1000px;
-            /* Scroll enable kiya gaya hai taaki mobile me overflow handle ho */
-            overflow-y: auto; overflow-x: hidden;
+            overflow-y: auto; overflow-x: hidden; -webkit-overflow-scrolling: touch; /* Allow safe scroll */
+            padding: 20px; box-sizing: border-box;
+        }
+
+        /* Profile Image Container - ANIMATED & UPGRADED */
+        .profile-wrapper {
+            position: relative;
+            width: clamp(160px, 25vw, 250px);
+            height: clamp(160px, 25vw, 250px);
+            margin-bottom: 2.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        /* Animated Dashed Ring */
+        .profile-wrapper::before {
+            content: '';
+            position: absolute;
+            inset: -15px;
+            border: 2px dashed var(--accent-main);
+            border-radius: 50%;
+            animation: spinRing 20s linear infinite;
+            opacity: 0.5;
+        }
+
+        /* Solid Orbiting Dot */
+        .profile-wrapper::after {
+            content: '';
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background: #fff;
+            border-radius: 50%;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            box-shadow: 0 0 15px #fff, 0 0 30px var(--accent-main);
+            animation: orbitDot 8s linear infinite;
+            transform-origin: 50% clamp(95px, 12.5vw + 15px, 140px); /* Responsive origin */
+        }
+
+        .profile-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            z-index: 10;
         }
         
-        .gk-title { font-family: var(--font-heading); font-size: clamp(2.5rem, 8vw, 5rem); font-weight: 900; letter-spacing: 4px; margin-bottom: 0.5rem; text-align: center; text-shadow: 0 0 40px rgba(255,255,255,0.15); animation: pulseGlow 3s infinite alternate; }
-        .gk-subtitle { color: var(--text-muted); font-size: clamp(0.85rem, 2vw, 1.2rem); margin-bottom: 4rem; text-transform: uppercase; letter-spacing: 4px; text-align: center; }
+        .profile-img {
+            width: 100%; height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid rgba(255, 255, 255, 0.1);
+            position: relative; z-index: 2;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+            background-color: var(--bg-color); /* For placeholder text */
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
         
-        .gk-options { display: flex; flex-wrap: wrap; gap: 3rem; max-width: 1100px; width: 90%; justify-content: center; }
+        .profile-wrapper:hover .profile-img {
+            transform: scale(1.05);
+        }
+
+        /* Soft pulsing background glow */
+        .profile-glow-ring {
+            position: absolute;
+            inset: -5px;
+            border-radius: 50%;
+            background: conic-gradient(from 0deg, var(--accent-main), transparent 120deg, var(--accent-dark) 180deg, transparent 300deg, var(--accent-main) 360deg);
+            z-index: 1;
+            filter: blur(15px);
+            opacity: 0.9;
+            animation: spinGlow 6s linear infinite;
+        }
+
+        /* Animations for Profile */
+        @keyframes spinRing { 100% { transform: rotate(360deg); } }
+        @keyframes orbitDot { 100% { transform: translateX(-50%) rotate(360deg); } }
+        @keyframes spinGlow { 100% { transform: rotate(360deg); } }
+
+
+        .gk-title { font-family: var(--font-heading); font-size: clamp(2.2rem, 6vw, 4.5rem); font-weight: 900; letter-spacing: 4px; margin-bottom: 0.2rem; text-align: center; text-shadow: 0 0 40px rgba(255,255,255,0.15); animation: pulseGlow 3s infinite alternate; }
+        .gk-subtitle { color: var(--text-muted); font-size: clamp(0.85rem, 1.5vw, 1.1rem); margin-bottom: 3.5rem; text-transform: uppercase; letter-spacing: 4px; text-align: center; padding: 0 10px; }
+        
+        .gk-options { display: flex; flex-wrap: wrap; gap: 2rem; max-width: 1100px; width: 100%; justify-content: center; box-sizing: border-box; padding: 0 15px; }
         
         .gk-card {
-            flex: 1; min-width: 280px; padding: 4rem 2.5rem; border-radius: 30px; text-align: center;
+            flex: 1; min-width: 280px; max-width: 450px; padding: 3rem 2rem; border-radius: 30px; text-align: center;
             background: linear-gradient(145deg, rgba(30,30,40,0.6) 0%, rgba(10,10,15,0.8) 100%);
             border: 1px solid var(--border); position: relative; overflow: hidden;
             backdrop-filter: blur(20px); transform-style: preserve-3d; transition: border-color 0.4s, box-shadow 0.4s;
-            will-change: transform;
+            will-change: transform; box-sizing: border-box;
         }
         
         .gk-card::before {
@@ -120,12 +204,10 @@
         .gk-card.opt-trainer:hover { border-color: #b026ff; box-shadow: 0 30px 80px rgba(176, 38, 255, 0.2), inset 0 0 30px rgba(176,38,255,0.1); }
         .gk-card.opt-trainer:hover i, .gk-card.opt-trainer:hover .btn-text { color: #b026ff; transform: translateZ(30px); }
         
-        .gk-card i { font-size: 4rem; color: #475569; margin-bottom: 2rem; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); transform: translateZ(20px); display: inline-block; }
-        .gk-card h3 { font-family: var(--font-heading); font-size: 1.8rem; margin-bottom: 1rem; font-weight: 800; transform: translateZ(25px); }
-        .gk-card p { color: var(--text-muted); font-size: 1rem; line-height: 1.8; transform: translateZ(15px); }
-        .btn-text { margin-top: 3rem; font-weight: 800; font-family: var(--font-heading); text-transform: uppercase; font-size: 0.95rem; letter-spacing: 2px; transition: 0.4s; display: inline-block; }
-
-        @keyframes pulseGlow { 0% { text-shadow: 0 0 20px rgba(255,255,255,0.1); } 100% { text-shadow: 0 0 40px rgba(255,255,255,0.3); } }
+        .gk-card i { font-size: 3.5rem; color: #475569; margin-bottom: 1.5rem; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); transform: translateZ(20px); display: inline-block; }
+        .gk-card h3 { font-family: var(--font-heading); font-size: 1.6rem; margin-bottom: 1rem; font-weight: 800; transform: translateZ(25px); }
+        .gk-card p { color: var(--text-muted); font-size: 0.95rem; line-height: 1.8; transform: translateZ(15px); }
+        .btn-text { margin-top: 2rem; font-weight: 800; font-family: var(--font-heading); text-transform: uppercase; font-size: 0.85rem; letter-spacing: 2px; transition: 0.4s; display: inline-block; }
 
         /* Background Particle Canvas */
         #particle-canvas { position: fixed; inset: 0; z-index: -2; opacity: 0.9; pointer-events: none; }
@@ -144,7 +226,7 @@
         .dynamic-gradient { background: linear-gradient(135deg, var(--accent-main), var(--accent-dark)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         
         .section-header { text-align: center; margin-bottom: 5rem; }
-        .section-header h2 { font-size: clamp(2.2rem, 5vw, 4rem); font-weight: 900; margin-bottom: 1.5rem; letter-spacing: -1px; }
+        .section-header h2 { font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 900; margin-bottom: 1.5rem; letter-spacing: -1px; }
         .section-header p { color: var(--text-muted); font-size: 1.15rem; max-width: 700px; margin: 0 auto; line-height: 1.8; }
 
         /* High-End Glass Cards */
@@ -170,8 +252,10 @@
         nav { position: fixed; top: 0; width: 100%; z-index: 1000; padding: 1.5rem 0; transition: var(--transition-smooth); border-bottom: 1px solid transparent; }
         nav.scrolled { background: rgba(5, 5, 8, 0.9); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); padding: 1rem 0; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
         .nav-container { display: flex; justify-content: space-between; align-items: center; width: 90%; max-width: 1250px; margin: 0 auto; }
-        .logo { font-family: var(--font-heading); font-size: 2rem; font-weight: 900; color: #fff; text-decoration: none; letter-spacing: -1px; }
+        .logo { font-family: var(--font-heading); font-size: 2rem; font-weight: 900; color: #fff; text-decoration: none; letter-spacing: -1px; display: flex; align-items: center; gap: 10px; }
         .logo span { color: var(--accent-main); transition: color 0.5s; }
+        .nav-profile-img { width: 35px; height: 35px; border-radius: 50%; object-fit: cover; border: 2px solid var(--accent-main); display: none; }
+        nav.scrolled .nav-profile-img { display: block; }
 
         .action-btns { display: flex; gap: 15px; align-items: center; }
         .btn-outline {
@@ -182,9 +266,9 @@
         .btn-outline:hover { background: var(--accent-main); color: #000; border-color: var(--accent-main); box-shadow: 0 0 25px var(--glow-spread); transform: translateY(-2px); }
 
         /* HERO SECTION */
-        #hero { min-height: 100vh; display: flex; align-items: center; position: relative; padding-top: 6rem; }
-        .hero-title { font-size: clamp(2.8rem, 7vw, 7rem); font-weight: 900; line-height: 1.05; letter-spacing: -2px; margin-bottom: 2rem; }
-        .hero-desc { font-size: clamp(1.05rem, 2vw, 1.3rem); color: var(--text-muted); max-width: 750px; margin-bottom: 3.5rem; line-height: 1.8; }
+        #hero { min-height: 100vh; display: flex; align-items: center; position: relative; padding-top: 5rem; }
+        .hero-title { font-size: clamp(3rem, 7vw, 7rem); font-weight: 900; line-height: 1.05; letter-spacing: -2px; margin-bottom: 2rem; }
+        .hero-desc { font-size: clamp(1.1rem, 2vw, 1.3rem); color: var(--text-muted); max-width: 750px; margin-bottom: 3.5rem; line-height: 1.8; }
         .status-pill { 
             display: inline-flex; align-items: center; gap: 10px; padding: 10px 24px; border-radius: 50px; 
             background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.3); 
@@ -193,11 +277,11 @@
         }
 
         /* STATS */
-        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 2rem; margin-top: 4rem; border-top: 1px solid var(--border); padding-top: 4rem; }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; margin-top: 4rem; border-top: 1px solid var(--border); padding-top: 4rem; }
         .stat-box { text-align: left; }
-        .stat-num { font-family: var(--font-heading); font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 900; color: #fff; margin-bottom: 0.2rem; text-shadow: 0 0 20px rgba(255,255,255,0.1); }
-        .stat-num span { color: var(--accent-main); font-size: clamp(1.8rem, 4vw, 3rem); }
-        .stat-label { color: var(--text-muted); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; }
+        .stat-num { font-family: var(--font-heading); font-size: clamp(3rem, 5vw, 4rem); font-weight: 900; color: #fff; margin-bottom: 0.2rem; text-shadow: 0 0 20px rgba(255,255,255,0.1); }
+        .stat-num span { color: var(--accent-main); font-size: clamp(2rem, 4vw, 3rem); }
+        .stat-label { color: var(--text-muted); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; font-weight: 700; }
 
         /* === GLOWING TIMELINE (Responsive & Interactive) === */
         .timeline { position: relative; max-width: 1000px; margin: 0 auto; padding: 2rem 0; }
@@ -221,52 +305,31 @@
         .timeline-item.active-node .timeline-dot { border-color: var(--accent-main); background: #fff; box-shadow: 0 0 30px var(--accent-main); }
         
         .time-date { color: var(--accent-main); font-weight: 800; font-family: var(--font-heading); font-size: 1.1rem; margin-bottom: 0.8rem; letter-spacing: 1px; }
-        .time-role { font-size: 1.5rem; color: #fff; margin-bottom: 0.5rem; font-weight: 800; word-break: break-word; line-height: 1.3;}
-        .time-client { color: var(--text-muted); font-size: 1rem; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 10px; font-weight: 500; }
-        .tech-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 1.5rem; }
-        .tech-tags span { font-size: 0.75rem; padding: 6px 12px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 8px; color: var(--text-muted); font-weight: 600; letter-spacing: 0.5px;}
-
-        /* CSS class for View Details Hint */
-        .view-details-hint {
-            color: var(--accent-main); font-size: 0.85rem; font-weight: 700; margin-top: 1.5rem; 
-            text-transform: uppercase; letter-spacing: 1px; display: inline-flex; align-items: center; 
-            gap: 5px; transition: 0.3s;
-        }
-        .glass:hover .view-details-hint { transform: translateX(5px); }
+        .time-role { font-size: 1.6rem; color: #fff; margin-bottom: 0.5rem; font-weight: 800; }
+        .time-client { color: var(--text-muted); font-size: 1.05rem; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 10px; font-weight: 500; }
+        .tech-tags { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 1.5rem; }
+        .tech-tags span { font-size: 0.8rem; padding: 6px 14px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 8px; color: var(--text-muted); font-weight: 600; letter-spacing: 0.5px;}
 
         /* TERMINAL / WHATSAPP UI */
         .terminal-box { background: #0a0a0e; border: 1px solid rgba(255,255,255,0.08); border-radius: 24px; overflow: hidden; box-shadow: 0 30px 80px rgba(0,0,0,0.6); max-width: 850px; margin: 0 auto; transition: var(--transition-smooth); }
         .terminal-box:hover { border-color: var(--accent-main); box-shadow: 0 40px 100px rgba(0,0,0,0.8), inset 0 0 30px var(--glow-spread); transform: translateY(-8px); }
-        .terminal-header { background: rgba(255,255,255,0.03); padding: 15px 25px; display: flex; gap: 10px; border-bottom: 1px solid rgba(255,255,255,0.05); align-items: center; }
-        .t-dot { width: 12px; height: 12px; border-radius: 50%; }
+        .terminal-header { background: rgba(255,255,255,0.03); padding: 20px 30px; display: flex; gap: 12px; border-bottom: 1px solid rgba(255,255,255,0.05); align-items: center; }
+        .t-dot { width: 14px; height: 14px; border-radius: 50%; }
         .t-red { background: #ff5f56; } .t-yel { background: #ffbd2e; } .t-grn { background: #27c93f; }
-        .terminal-body { padding: 3rem; }
+        .terminal-body { padding: 4rem; }
         
         .form-group { margin-bottom: 2.5rem; }
-        .form-group label { display: block; margin-bottom: 10px; font-family: var(--font-heading); color: var(--text-muted); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; font-weight: 700; }
-        .form-input { width: 100%; background: transparent; border: none; border-bottom: 2px solid rgba(255,255,255,0.1); color: #fff; font-size: 1.2rem; padding: 12px 0; font-family: var(--font-body); transition: 0.3s; }
+        .form-group label { display: block; margin-bottom: 12px; font-family: var(--font-heading); color: var(--text-muted); font-size: 0.95rem; text-transform: uppercase; letter-spacing: 2px; font-weight: 700; }
+        .form-input { width: 100%; background: transparent; border: none; border-bottom: 2px solid rgba(255,255,255,0.1); color: #fff; font-size: 1.3rem; padding: 15px 0; font-family: var(--font-body); transition: 0.3s; }
         .form-input:focus { outline: none; border-bottom-color: var(--accent-main); }
         
         .whatsapp-btn-huge {
             width: 100%; background: #25D366; color: #000; font-family: var(--font-heading);
-            font-weight: 900; font-size: 1.1rem; padding: 1.2rem; border: none; border-radius: 12px;
-            display: flex; align-items: center; justify-content: center; gap: 12px; letter-spacing: 1px;
-            transition: var(--transition-smooth); margin-top: 2rem; cursor: pointer;
+            font-weight: 900; font-size: 1.2rem; padding: 1.5rem; border: none; border-radius: 16px;
+            display: flex; align-items: center; justify-content: center; gap: 15px; letter-spacing: 1px;
+            transition: var(--transition-smooth); margin-top: 3rem; cursor: pointer !important;
         }
-        .whatsapp-btn-huge:hover { transform: translateY(-3px); box-shadow: 0 20px 40px rgba(37, 211, 102, 0.4); background: #1ebe57; color: #fff; }
-
-        /* Feature: Footer Action Buttons */
-        .footer-actions { display: flex; justify-content: center; gap: 15px; margin-top: 2rem; flex-wrap: wrap; }
-        .footer-btn {
-            display: inline-flex; align-items: center; gap: 8px; padding: 12px 25px;
-            border-radius: 50px; font-family: var(--font-heading); font-weight: 700;
-            text-decoration: none; transition: var(--transition-smooth); font-size: 1rem;
-            background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(10px);
-        }
-        .email-btn { color: #fff; }
-        .email-btn:hover { background: #ea4335; border-color: #ea4335; box-shadow: 0 10px 30px rgba(234, 67, 53, 0.4); transform: translateY(-4px); }
-        .phone-btn { color: #fff; }
-        .phone-btn:hover { background: #34d399; border-color: #34d399; box-shadow: 0 10px 30px rgba(52, 211, 153, 0.4); color: #000; transform: translateY(-4px); }
+        .whatsapp-btn-huge:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(37, 211, 102, 0.4); background: #1ebe57; color: #fff; }
 
         /* MODAL (Pop-out Details) */
         .modal-overlay {
@@ -289,18 +352,18 @@
 
         .modal-close {
             position: absolute; top: 30px; right: 30px; font-size: 1.8rem; color: var(--text-muted);
-            background: transparent; border: none; transition: 0.3s; z-index: 10;
+            background: transparent; border: none; transition: 0.3s; z-index: 10; cursor: pointer !important;
         }
         .modal-close:hover { color: var(--accent-main); transform: rotate(90deg) scale(1.2); }
         
         .modal-header { margin-bottom: 2.5rem; border-bottom: 1px solid var(--border); padding-bottom: 2rem; }
-        .modal-title { font-family: var(--font-heading); font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 900; color: #fff; margin-bottom: 0.8rem; line-height: 1.2; }
-        .modal-role { color: var(--accent-main); font-weight: 800; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 0.8rem; }
-        .modal-duration { color: var(--text-muted); font-size: 1rem; font-family: monospace; font-weight: 600; }
+        .modal-title { font-family: var(--font-heading); font-size: clamp(2rem, 4vw, 2.8rem); font-weight: 900; color: #fff; margin-bottom: 0.8rem; line-height: 1.2; }
+        .modal-role { color: var(--accent-main); font-weight: 800; font-size: 1.2rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 0.8rem; }
+        .modal-duration { color: var(--text-muted); font-size: 1.05rem; font-family: monospace; font-weight: 600; }
         
         .modal-body ul { list-style: none; margin-top: 1.5rem; }
-        .modal-body li { position: relative; padding-left: 28px; margin-bottom: 15px; color: #cbd5e1; line-height: 1.7; font-size: 1.05rem; }
-        .modal-body li::before { content: '▹'; position: absolute; left: 0; top: 0; color: var(--accent-main); font-weight: 900; font-size: 1.2rem; }
+        .modal-body li { position: relative; padding-left: 32px; margin-bottom: 20px; color: #cbd5e1; line-height: 1.8; font-size: 1.1rem; }
+        .modal-body li::before { content: '▹'; position: absolute; left: 0; top: 0; color: var(--accent-main); font-weight: 900; font-size: 1.3rem; }
 
         /* =========================================
            ATS PRINT RESUME STYLES (FLAWLESS LOGIC)
@@ -333,61 +396,117 @@
             * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
         }
 
-        /* RESPONSIVE DESIGN (PROPER MOBILE POLISH) */
-        @media (max-width: 992px) {
-            .cursor-dot, .cursor-outline { display: none !important; } * { cursor: auto !important; }
-            
-            /* Fix: Gatekeeper flex behavior on mobile taaki scrolling sahi kaam kare */
-            #gatekeeper { justify-content: flex-start; padding: 4rem 1.5rem; }
-            .gk-options { flex-direction: column; gap: 2rem; width: 100%; }
-            .gk-card { padding: 3rem 2rem; }
-
-            /* Fix: Timeline Alignment */
-            .timeline::before, .timeline-progress { left: 35px; }
-            .timeline-item { width: 100% !important; padding-left: 80px !important; padding-right: 0 !important; }
-            .timeline-item:nth-child(even) { left: 0; }
-            .timeline-dot { left: 23px !important; }
-            
-            .modal-content { padding: 2.5rem; }
+        /* === CHATBOT STYLES (Smart AI Bot) === */
+        .chatbot-fab {
+            position: fixed; bottom: 30px; right: 30px; width: 65px; height: 65px;
+            border-radius: 50%; background: var(--accent-main); color: #000; border: none;
+            font-size: 1.8rem; box-shadow: 0 0 25px var(--glow-spread); z-index: 9998;
+            display: flex; align-items: center; justify-content: center;
+            transition: var(--transition-smooth); cursor: pointer !important;
         }
+        .chatbot-fab:hover { transform: scale(1.1) rotate(10deg); background: #fff; }
+        
+        .chatbot-container {
+            position: fixed; bottom: 110px; right: 30px; width: 360px; height: 500px;
+            background: var(--surface); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
+            border: 1px solid var(--border); border-radius: 20px; z-index: 9999;
+            display: flex; flex-direction: column; overflow: hidden; opacity: 0; visibility: hidden;
+            transform: translateY(20px); transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8), inset 0 0 20px rgba(255,255,255,0.05);
+        }
+        .chatbot-container.active { opacity: 1; visibility: visible; transform: translateY(0); }
+        .chatbot-container * { cursor: auto !important; } /* Fix cursor bug for bot */
+        
+        .chatbot-header {
+            background: rgba(255,255,255,0.05); padding: 18px 20px; display: flex; justify-content: space-between;
+            align-items: center; border-bottom: 1px solid var(--border); font-family: var(--font-heading); font-weight: 700;
+        }
+        .chatbot-header span { color: #fff; font-size: 1.1rem; display: flex; align-items: center; gap: 8px; }
+        .chatbot-header span i { color: var(--accent-main); }
+        .chatbot-header button { background: none; border: none; color: var(--text-muted); font-size: 1.2rem; transition: 0.3s; cursor: pointer !important; }
+        .chatbot-header button:hover { color: #ff5f56; }
+        
+        .chatbot-messages { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 15px; }
+        .chatbot-messages::-webkit-scrollbar { width: 6px; }
+        .chatbot-messages::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
+        
+        .msg-bubble { max-width: 85%; padding: 12px 16px; border-radius: 18px; font-size: 0.95rem; line-height: 1.5; font-family: var(--font-body); }
+        .bot-msg { background: rgba(255,255,255,0.08); align-self: flex-start; border-bottom-left-radius: 4px; color: #e2e8f0; border: 1px solid rgba(255,255,255,0.05); }
+        .user-msg { background: var(--accent-main); color: #000; align-self: flex-end; border-bottom-right-radius: 4px; font-weight: 600; box-shadow: 0 5px 15px var(--glow-spread); }
+        
+        .chatbot-input { display: flex; padding: 15px; border-top: 1px solid var(--border); background: rgba(0,0,0,0.3); align-items: center; }
+        .chatbot-input input { flex: 1; background: transparent; border: none; color: #fff; font-family: var(--font-body); font-size: 1rem; padding: 5px; }
+        .chatbot-input input:focus { outline: none; }
+        .chatbot-input button { background: var(--accent-main); color: #000; border: none; border-radius: 50%; width: 40px; height: 40px; margin-left: 12px; transition: 0.3s; cursor: pointer !important; display: flex; align-items: center; justify-content: center; font-size: 1rem;}
+        .chatbot-input button:hover { transform: scale(1.1); box-shadow: 0 0 15px var(--accent-main); }
         
         @media (max-width: 600px) {
-            .action-btns span { display: none; }
-            .btn-outline { padding: 10px 15px; }
-            
-            #gatekeeper { padding: 2.5rem 1rem; }
-            .gk-card { padding: 2.5rem 1.5rem; border-radius: 20px; }
-            
-            /* Fix: Extremely small screen optimizations */
+            .chatbot-container { width: 90%; right: 5%; bottom: 100px; height: 60vh; }
+        }
+
+        /* RESPONSIVE DESIGN */
+        
+        /* Tablets and Smaller Screens */
+        @media (max-width: 992px) {
+            .cursor-dot, .cursor-outline { display: none !important; } * { cursor: auto !important; }
             .timeline::before, .timeline-progress { left: 20px; }
-            .timeline-item { padding-left: 55px !important; }
-            .timeline-dot { left: 8px !important; width: 20px; height: 20px; top: 42px; }
+            .timeline-item { width: 100% !important; padding-left: 60px !important; padding-right: 0 !important; }
+            .timeline-item:nth-child(even) { left: 0; }
+            .timeline-dot { left: 8px !important; }
+            .modal-content { padding: 2.5rem; width: 95%; max-width: 100%; }
+            .glass { padding: 1.8rem; }
+        }
+
+        /* Mobile Screens: CRUCIAL GATEKEEPER FIXES */
+        @media (max-height: 850px), (max-width: 768px) {
+            #gatekeeper { 
+                justify-content: flex-start; /* Fixes top cut-off issue */
+                padding: 60px 20px 40px 20px; /* Safe space for top & bottom */
+            }
+            .profile-wrapper { 
+                width: 160px; height: 160px; margin-bottom: 2rem;
+            }
+            .gk-title { font-size: 2.5rem; word-break: break-word; }
+            .gk-subtitle { margin-bottom: 2rem; }
+            .gk-options { 
+                flex-direction: column; 
+                gap: 1.5rem; 
+                padding: 0; /* Let cards handle internal padding */
+            }
+            .gk-card { 
+                width: 100%; 
+                min-width: unset; 
+                max-width: 100%; 
+                padding: 2rem 1.5rem; 
+            }
+            .action-btns span { display: none; }
+            .terminal-body { padding: 1.5rem; }
+            .modal-content { padding: 1.5rem; }
+            .hero-title { font-size: 2.8rem; word-break: break-word; }
+            .chatbot-container { width: 90%; right: 5%; bottom: 100px; height: 60vh; max-width: 100vw; }
             
-            .glass { padding: 1.5rem; border-radius: 16px; }
-            .terminal-body { padding: 1.8rem; }
-            .terminal-header { padding: 12px 18px; }
-            
-            .modal-content { padding: 1.8rem; margin: 0 10px; border-radius: 20px; }
-            .modal-close { top: 15px; right: 20px; font-size: 1.5rem; }
+            @keyframes orbitDot { 100% { transform: translateX(-50%) rotate(360deg); } }
         }
     </style>
 </head>
-<body>
+<body style="overflow: hidden;">
 
-    <!-- Custom Cursor -->
-    <div class="cursor-dot" id="cursor-dot"></div>
-    <div class="cursor-outline" id="cursor-outline"></div>
-
-    <!-- Background Engine -->
     <canvas id="particle-canvas"></canvas>
     <div class="bg-glow"></div>
 
-    <!-- 1. GATEKEEPER SCREEN (Interactive 3D Cards with Mobile Fixes) -->
     <div id="gatekeeper">
-        <h1 class="gk-title">MIR.ALI</h1>
-        <p class="gk-subtitle">Select Enterprise Capability Profile</p>
+        <!-- New Animated Profile Image Wrapper -->
+        <div class="profile-wrapper fade-in-up delay-1">
+            <div class="profile-container">
+                <img src="Assets/photos/profile.png" alt="Mir Moheeb Ali" class="profile-img" onerror="this.src='https://ui-avatars.com/api/?name=Mir+Ali&background=0a0a0f&color=00f2fe&size=250'">
+                <div class="profile-glow-ring"></div>
+            </div>
+        </div>
+
+        <h1 class="gk-title fade-in-up delay-2">MIR.ALI</h1>
+        <p class="gk-subtitle fade-in-up delay-3">Select Enterprise Capability Profile</p>
         
-        <div class="gk-options">
+        <div class="gk-options fade-in-up delay-4">
             <div class="gk-card opt-lead custom-hover" onclick="initSite('lead')">
                 <i class="fas fa-network-wired"></i>
                 <h3>Technical Lead</h3>
@@ -404,25 +523,25 @@
         </div>
     </div>
 
-    <!-- 2. MAIN SITE ARCHITECTURE -->
     <div id="main-site">
         
-        <!-- Navbar -->
         <nav id="navbar">
             <div class="nav-container">
-                <a href="#" onclick="window.scrollTo(0,0)" class="logo custom-hover">MIR<span>.</span>ALI</a>
+                <a href="#" onclick="window.scrollTo(0,0)" class="logo custom-hover">
+                    <img src="Assets/photos/profile.png" alt="Profile" class="nav-profile-img" onerror="this.style.display='none'">
+                    MIR<span>.</span>ALI
+                </a>
                 <div class="action-btns">
-                    <button onclick="showGatekeeper()" class="btn-outline custom-hover" title="Switch Role">
+                    <button onclick="showGatekeeper()" class="btn-outline custom-hover" title="Switch Role" style="cursor: pointer !important;">
                         <i class="fas fa-sync-alt"></i> <span>Switch Role</span>
                     </button>
-                    <button onclick="generateATSResume()" class="btn-outline custom-hover" style="border-color: var(--accent-main); color: var(--text-main);">
+                    <button onclick="generateATSResume()" class="btn-outline custom-hover" style="border-color: var(--accent-main); color: var(--text-main); cursor: pointer !important;">
                         <i class="fas fa-file-pdf" style="color: var(--accent-main);"></i> <span>Extract ATS Resume</span>
                     </button>
                 </div>
             </div>
         </nav>
 
-        <!-- HERO SECTION -->
         <main>
             <section id="hero" class="container">
                 <div>
@@ -436,8 +555,7 @@
                     </h1>
                     
                     <p id="hero-desc" class="hero-desc">
-                        <!-- Injected via JS -->
-                    </p>
+                        </p>
                     
                     <div class="stats-grid">
                         <div class="stat-box">
@@ -460,7 +578,6 @@
                 </div>
             </section>
 
-            <!-- DYNAMIC SECTION: EXPERIENCE TIMELINE -->
             <section class="container" id="experience">
                 <div class="section-header">
                     <h2 class="dynamic-gradient" id="timeline-title">Architecture Trajectory</h2>
@@ -469,12 +586,10 @@
                 
                 <div class="timeline" id="timeline-wrapper">
                     <div class="timeline-progress" id="timeline-progress"></div>
-                    <!-- JS Inject Timeline Items Here -->
                     <div id="timeline-items-container"></div>
                 </div>
             </section>
 
-            <!-- Direct WhatsApp Terminal -->
             <section id="contact" class="container">
                 <div class="section-header">
                     <h2 class="dynamic-gradient">Establish Connection</h2>
@@ -491,16 +606,16 @@
                     <div class="terminal-body">
                         <form onsubmit="sendWhatsApp(event)">
                             <div class="form-group">
-                                <label for="wa-name">Identification (Name)</label>
-                                <input type="text" id="wa-name" name="name" class="form-input" required autocomplete="name">
+                                <label>Identification (Name)</label>
+                                <input type="text" id="wa-name" class="form-input" required autocomplete="off" style="cursor: text !important;">
                             </div>
                             <div class="form-group">
-                                <label for="wa-email">Enterprise Relay (Email)</label>
-                                <input type="email" id="wa-email" name="email" class="form-input" required autocomplete="email">
+                                <label>Enterprise Relay (Email)</label>
+                                <input type="email" id="wa-email" class="form-input" required autocomplete="off" style="cursor: text !important;">
                             </div>
                             <div class="form-group">
-                                <label for="wa-message">Transmission Payload (Message)</label>
-                                <input type="text" id="wa-message" name="message" class="form-input" required autocomplete="off">
+                                <label>Transmission Payload (Message)</label>
+                                <input type="text" id="wa-message" class="form-input" required autocomplete="off" style="cursor: text !important;">
                             </div>
                             
                             <button type="submit" class="whatsapp-btn-huge custom-hover">
@@ -512,18 +627,21 @@
             </section>
         </main>
 
-        <!-- FOOTER -->
-        <footer style="text-align: center; padding: 4rem 0 2rem; border-top: 1px solid var(--border);">
+        <footer style="text-align: center; padding: 4rem 0; border-top: 1px solid var(--border);">
             <div class="container" style="padding: 0;">
                 <h2 style="font-size: 2.5rem; font-family: var(--font-heading); font-weight: 900; letter-spacing: 3px;">MIR<span style="color: var(--accent-main);">.</span>ALI</h2>
+                <p style="color: var(--text-muted); margin-top: 1rem; font-size: 1rem; font-weight: 500;">syedmmali4u@gmail.com | +91 8919269061 | Hyderabad, India</p>
                 
-                <!-- Feature: Clean Professional Footer Action Buttons -->
-                <div class="footer-actions">
-                    <a href="mailto:syedmmali4u@gmail.com" class="footer-btn email-btn custom-hover" title="Send an Email">
-                        <i class="fas fa-envelope"></i> Send Email
+                <!-- NEW DEDICATED CONTACT BUTTONS -->
+                <div style="display: flex; justify-content: center; gap: 15px; margin-top: 2rem; flex-wrap: wrap;">
+                    <a href="tel:+918919269061" class="btn-outline custom-hover" style="text-decoration: none; cursor: pointer !important;">
+                        <i class="fas fa-phone-alt"></i> <span>Call</span>
                     </a>
-                    <a href="tel:+918919269061" class="footer-btn phone-btn custom-hover" title="Make a Phone Call">
-                        <i class="fas fa-phone-alt"></i> Make a Call
+                    <a href="mailto:syedmmali4u@gmail.com" class="btn-outline custom-hover" style="text-decoration: none; cursor: pointer !important;">
+                        <i class="fas fa-envelope"></i> <span>Email</span>
+                    </a>
+                    <a href="https://wa.me/918919269061" target="_blank" class="btn-outline custom-hover" style="text-decoration: none; cursor: pointer !important;">
+                        <i class="fab fa-whatsapp"></i> <span>WhatsApp</span>
                     </a>
                 </div>
 
@@ -532,10 +650,28 @@
         </footer>
     </div>
 
-    <!-- === POP-UP MODAL OVERLAY === -->
-    <div id="project-modal" class="modal-overlay" role="dialog" aria-modal="true">
+    <!-- Smart Chatbot UI -->
+    <div id="smart-chatbot" class="chatbot-container">
+        <div class="chatbot-header">
+            <span><i class="fas fa-robot"></i> Mir AI Assistant</span>
+            <button onclick="toggleChatbot()" title="Close"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="chatbot-messages" id="chatbot-messages">
+            <div class="msg-bubble bot-msg">Hello! I am Mir's AI Assistant. How may I assist you today regarding his enterprise architecture profile, skills, or experience?</div>
+        </div>
+        <div class="chatbot-input">
+            <input type="text" id="chat-input" placeholder="Type your message..." style="cursor: text !important;" onkeypress="handleChatKeyPress(event)">
+            <button onclick="sendChatMessage()"><i class="fas fa-paper-plane"></i></button>
+        </div>
+    </div>
+    <button class="chatbot-fab custom-hover" onclick="toggleChatbot()" title="Chat with AI">
+        <i class="fas fa-comment-dots"></i>
+    </button>
+
+    <!-- Modal Layout -->
+    <div id="project-modal" class="modal-overlay">
         <div class="modal-content custom-hover" id="modal-content-box">
-            <button class="modal-close" onclick="closeModal()" aria-label="Close Modal"><i class="fas fa-times"></i></button>
+            <button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button>
             <div class="modal-header">
                 <h2 class="modal-title" id="modal-client">Client Name</h2>
                 <div class="modal-role" id="modal-role">Role</div>
@@ -543,18 +679,18 @@
             </div>
             <div class="modal-body">
                 <ul id="modal-bullets">
-                    <!-- Javascript will populate bullets here -->
-                </ul>
+                    </ul>
             </div>
         </div>
     </div>
 
-    <!-- Hidden Print Area for PDF -->
     <div id="resume-print-container"></div>
 
-    <!-- JAVASCRIPT LOGIC -->
+    <div class="cursor-dot" id="cursor-dot"></div>
+    <div class="cursor-outline" id="cursor-outline"></div>
+
     <script>
-        // --- DATA OBJECT (Projects Database) ---
+        // --- 100% COMPLETE DATA OBJECT (16 Projects Covered Flawlessly) ---
         const resumeData = {
             basics: {
                 name: "MIR MOHEEB ALI",
@@ -884,7 +1020,7 @@
             }
         });
 
-        // Gatekeeper Cards Parallax Tilt
+        // 3D Parallax Tilt for Gatekeeper Cards
         document.querySelectorAll('.gk-card').forEach(card => {
             card.addEventListener('mousemove', function(e) {
                 const rect = this.getBoundingClientRect();
@@ -911,7 +1047,7 @@
                 el.addEventListener('mouseleave', () => document.body.classList.remove('hover-active'));
             });
 
-            // Glassmorphism Glow Effect
+            // Glassmorphism Light Tracking
             document.querySelectorAll('.glass').forEach(card => {
                 card.addEventListener('mousemove', e => {
                     const rect = card.getBoundingClientRect();
@@ -923,7 +1059,7 @@
             });
         }
 
-        // --- NAVBAR SCROLL ANIMATION ---
+        // --- NAVBAR SCROLL ---
         window.addEventListener('scroll', () => {
             const nav = document.getElementById('navbar');
             if(window.scrollY > 50) nav.classList.add('scrolled');
@@ -934,8 +1070,9 @@
         function initSite(mode) {
             currentMode = mode;
             document.body.className = `mode-${mode}`;
+            document.body.style.overflow = ''; // Unlock scroll
             
-            // Text and Titles Update
+            // Text Updates
             if(mode === 'lead') {
                 document.getElementById('hero-title-1').innerText = "ENGINEERING";
                 document.getElementById('hero-title-2').innerText = "ENTERPRISE FUTURES.";
@@ -962,7 +1099,7 @@
             renderTimeline();
             updateParticleColor();
 
-            // Smooth Screen Transition
+            // Transition
             const gk = document.getElementById('gatekeeper');
             gk.style.transform = 'scale(1.1)';
             gk.style.opacity = '0';
@@ -976,7 +1113,6 @@
             }, 800);
         }
 
-        // Return to Gatekeeper Selection
         function showGatekeeper() {
             const ms = document.getElementById('main-site');
             ms.style.opacity = '0';
@@ -984,9 +1120,10 @@
                 ms.style.visibility = 'hidden';
                 const gk = document.getElementById('gatekeeper');
                 gk.style.display = 'flex';
-                void gk.offsetWidth; // Force DOM Reflow
+                void gk.offsetWidth; // Reflow
                 gk.style.transform = 'scale(1)';
                 gk.style.opacity = '1';
+                document.body.style.overflow = 'hidden'; // Lock scroll again
             }, 600);
         }
 
@@ -1008,7 +1145,7 @@
                             <div class="time-client"><i class="fas fa-building" style="color:var(--accent-main)"></i> ${proj.client}</div>
                             <p style="color: var(--text-muted); font-size: 1.05rem; line-height: 1.6;">${proj.shortDesc}</p>
                             <div class="tech-tags">${tagsHTML}</div>
-                            <div class="view-details-hint"><i class="fas fa-expand-arrows-alt"></i> View Full Details</div>
+                            <div class="view-details-hint" style="margin-top:15px; color:var(--accent-main); font-size:0.9rem;"><i class="fas fa-expand-arrows-alt"></i> View Full Details</div>
                         </div>
                     </div>
                 `;
@@ -1032,7 +1169,7 @@
 
             document.querySelectorAll('.timeline-item').forEach(el => observer.observe(el));
 
-            // Tracking center line progress on scroll
+            // Line Progress Tracker
             window.addEventListener('scroll', () => {
                 const wrapper = document.getElementById('timeline-wrapper');
                 const progress = document.getElementById('timeline-progress');
@@ -1051,7 +1188,7 @@
             });
         }
 
-        // --- UPGRADED PARTICLE ENGINE ---
+        // --- UPGRADED PARTICLE ENGINE (Interactive AI Network) ---
         const canvas = document.getElementById('particle-canvas');
         const ctx = canvas.getContext('2d');
         let particlesArray = [];
@@ -1079,23 +1216,25 @@
                 this.speedY = (Math.random() * 0.8) - 0.4;
             }
             update() {
+                // Autonomous movement
                 this.x += this.speedX;
                 this.y += this.speedY;
                 if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
                 if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
 
-                // Mouse Push/Pull logic
+                // Mouse Interaction (Push/Pull effect)
                 let dx = mouse.x - this.x;
                 let dy = mouse.y - this.y;
                 let distance = Math.sqrt(dx * dx + dy * dy);
                 let forceDirectionX = dx / distance;
                 let forceDirectionY = dy / distance;
-                let force = (mouse.radius - distance) / mouse.radius;
+                let maxDistance = mouse.radius;
+                let force = (maxDistance - distance) / maxDistance;
                 let directionX = forceDirectionX * force * this.density;
                 let directionY = forceDirectionY * force * this.density;
 
                 if (distance < mouse.radius) {
-                    this.x -= directionX; 
+                    this.x -= directionX; // Change to += for pull effect
                     this.y -= directionY;
                 }
             }
@@ -1122,6 +1261,7 @@
                 particlesArray[i].update();
                 particlesArray[i].draw();
                 
+                // Network lines
                 for (let j = i; j < particlesArray.length; j++) {
                     const dx = particlesArray[i].x - particlesArray[j].x;
                     const dy = particlesArray[i].y - particlesArray[j].y;
@@ -1150,7 +1290,7 @@
         initParticles();
         animateParticles();
 
-        // --- MODAL LOGIC ---
+        // --- MODAL LOGIC (With Body Scroll Lock) ---
         function openModal(projectId) {
             const proj = resumeData.projects.find(p => p.id === projectId);
             if(!proj) return;
@@ -1164,11 +1304,18 @@
             ul.innerHTML = bullets.map(b => `<li>${b}</li>`).join('');
 
             document.getElementById('project-modal').classList.add('active');
+            
+            // UX Feature: Lock website background scroll when modal opens
+            document.body.style.overflow = 'hidden';
         }
 
         function closeModal() {
             document.getElementById('project-modal').classList.remove('active');
+            
+            // UX Feature: Restore background scroll when modal closes
+            document.body.style.overflow = 'auto';
         }
+        
         document.getElementById('project-modal').addEventListener('click', function(e) {
             if(e.target === this) closeModal();
         });
@@ -1183,7 +1330,88 @@
             window.open(`https://wa.me/918919269061?text=${text}`, '_blank');
         }
 
-        // --- ATS PDF RESUME GENERATOR ---
+        // --- SMART CHATBOT LOGIC (Professional English AI Bot) ---
+        function toggleChatbot() {
+            const bot = document.getElementById('smart-chatbot');
+            bot.classList.toggle('active');
+        }
+
+        function handleChatKeyPress(e) {
+            if (e.key === 'Enter') {
+                sendChatMessage();
+            }
+        }
+
+        function sendChatMessage() {
+            const input = document.getElementById('chat-input');
+            const msg = input.value.trim();
+            if (!msg) return;
+
+            // User ka message display karein
+            appendMessage(msg, 'user');
+            input.value = '';
+
+            // AI sochne ka simulation (thoda delay)
+            setTimeout(() => {
+                const response = getBotResponse(msg.toLowerCase());
+                appendMessage(response, 'bot');
+            }, 600);
+        }
+
+        function appendMessage(text, sender) {
+            const msgsContainer = document.getElementById('chatbot-messages');
+            const div = document.createElement('div');
+            div.className = `msg-bubble ${sender}-msg`;
+            
+            // Bot messages allow HTML rendering for buttons, user is plain text
+            if(sender === 'bot') {
+                div.innerHTML = text;
+            } else {
+                div.innerText = text;
+            }
+            
+            msgsContainer.appendChild(div);
+            // Scroll to bottom
+            msgsContainer.scrollTop = msgsContainer.scrollHeight;
+        }
+
+        function getBotResponse(input) {
+            // Smart keyword detection logic in Professional English
+            if (input.includes('hi') || input.includes('hello') || input.includes('greetings')) {
+                return "Greetings! You can ask me about Mir's technical skills, project experience, or how to get in touch with him.";
+            }
+            if (input.includes('experience') || input.includes('work') || input.includes('background') || input.includes('history')) {
+                return "Mir brings over 15 years of robust experience in SAP ABAP and Enterprise Architecture. He has successfully delivered 50+ enterprise-scale projects across global landscapes.";
+            }
+            if (input.includes('skills') || input.includes('technology') || input.includes('tech') || input.includes('stack')) {
+                return "His core technical competencies include SAP ABAP, S/4HANA, SAP BTP, RAP, CAPM, OData Services, and seamless integration with SAP AI Core.";
+            }
+            // Smart contact buttons logic triggered here
+            if (input.includes('contact') || input.includes('email') || input.includes('phone') || input.includes('call') || input.includes('reach') || input.includes('number') || input.includes('whatsapp')) {
+                return `You can reach out to Mir directly using the options below:<br><br>
+                <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 5px;">
+                    <a href="tel:+918919269061" style="display: flex; align-items: center; gap: 10px; background: rgba(255,255,255,0.05); color: #fff; padding: 12px 15px; border-radius: 8px; text-decoration: none; border: 1px solid var(--accent-main); font-size: 0.9rem;">
+                        <i class="fas fa-phone-alt" style="color: var(--accent-main);"></i> Call: +91 8919269061
+                    </a>
+                    <a href="mailto:syedmmali4u@gmail.com" style="display: flex; align-items: center; gap: 10px; background: rgba(255,255,255,0.05); color: #fff; padding: 12px 15px; border-radius: 8px; text-decoration: none; border: 1px solid var(--accent-main); font-size: 0.9rem;">
+                        <i class="fas fa-envelope" style="color: var(--accent-main);"></i> Email: syedmmali4u@gmail.com
+                    </a>
+                    <a href="https://wa.me/918919269061" target="_blank" style="display: flex; align-items: center; gap: 10px; background: rgba(37,211,102,0.1); color: #fff; padding: 12px 15px; border-radius: 8px; text-decoration: none; border: 1px solid #25D366; font-size: 0.9rem;">
+                        <i class="fab fa-whatsapp" style="color: #25D366;"></i> WhatsApp Message
+                    </a>
+                </div>`;
+            }
+            if (input.includes('project') || input.includes('clients') || input.includes('companies')) {
+                return "He has provided architectural leadership and consulting for top-tier organizations such as Aramco, IBM, Infosys, and NTT Data. Please refer to the timeline section for a comprehensive project breakdown.";
+            }
+            if (input.includes('train') || input.includes('teach') || input.includes('educat') || input.includes('mentor')) {
+                return "Yes, Mir is an elite Corporate Trainer. He has successfully upskilled over 1,000 professionals across 50+ corporate batches, specializing in SAP BTP and modern AI integrations.";
+            }
+            
+            return "I apologize, I didn't quite catch that. Could you please rephrase? Try asking about his 'skills', 'experience', 'projects', or 'contact' information.";
+        }
+
+        // --- ATS PDF RESUME GENERATOR (100% COVERAGE, BULLETPROOF FIX) ---
         function generateATSResume() {
             const printArea = document.getElementById('resume-print-container');
             
@@ -1240,7 +1468,7 @@
             setTimeout(() => { window.print(); }, 300);
         }
 
-        // Site Load Setup
+        // Init Setup
         attachHoverEffects();
     </script>
 </body>
